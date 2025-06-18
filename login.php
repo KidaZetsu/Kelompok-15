@@ -9,7 +9,7 @@
 <body class="login-body">
     <div class="login-container">
         <h2>Login Sistem Absensi</h2>
-        <h3>Bengkel BDL</h3>
+        <h3>Bengkel BDLLLLL</h3>
         <hr>
         <?php
         

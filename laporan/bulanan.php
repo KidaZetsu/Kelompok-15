@@ -1,16 +1,16 @@
 <?php
 $page_title = "Laporan Absensi Bulanan";
 include '../template/header.php';
-include '../koneksi.php';
 
-// Tentukan bulan dan tahun
+
+
 $bulan = isset($_GET['bulan']) ? $_GET['bulan'] : date('m');
 $tahun = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
 
-// Nama bulan dalam bahasa Indonesia
+
 $nama_bulan = DateTime::createFromFormat('!m', $bulan)->format('F');
 
-// Jumlah hari dalam bulan yang dipilih
+
 $jumlah_hari = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 ?>
 
@@ -66,30 +66,30 @@ $jumlah_hari = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
             </thead>
             <tbody>
                 <?php
-                // 1. Ambil semua karyawan aktif
+                
                 $karyawan_query = "SELECT id_karyawan, nama_lengkap FROM karyawan WHERE status_karyawan = 'Aktif' ORDER BY nama_lengkap";
                 $karyawan_result = mysqli_query($koneksi, $karyawan_query);
                 
-                // 2. Ambil semua data absensi pada bulan dan tahun terpilih
+               
                 $absensi_query = "SELECT id_karyawan, tanggal_absensi, status_kehadiran FROM absensi WHERE MONTH(tanggal_absensi) = '$bulan' AND YEAR(tanggal_absensi) = '$tahun'";
                 $absensi_result = mysqli_query($koneksi, $absensi_query);
 
-                // 3. Olah data absensi ke dalam array agar mudah diakses
+                
                 $data_absensi = [];
                 while ($row = mysqli_fetch_assoc($absensi_result)) {
-                    $tanggal = date('j', strtotime($row['tanggal_absensi'])); // Ambil harinya saja (1-31)
+                    $tanggal = date('j', strtotime($row['tanggal_absensi'])); 
                     $data_absensi[$row['id_karyawan']][$tanggal] = $row['status_kehadiran'];
                 }
 
-                // 4. Looping untuk setiap karyawan
+               
                 while ($karyawan = mysqli_fetch_assoc($karyawan_result)) {
                     $id_karyawan = $karyawan['id_karyawan'];
                     echo "<tr><td>" . htmlspecialchars($karyawan['nama_lengkap']) . "</td>";
                     
-                    // Inisialisasi counter total
+                    
                     $total_hadir = $total_sakit = $total_izin = $total_alpha = 0;
 
-                    // 5. Looping untuk setiap hari dalam sebulan
+                    
                     for ($hari = 1; $hari <= $jumlah_hari; $hari++) {
                         $status = '-';
                         if (isset($data_absensi[$id_karyawan][$hari])) {
@@ -98,20 +98,20 @@ $jumlah_hari = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
                             elseif ($status_db == 'Sakit') { $status = 'S'; $total_sakit++; }
                             elseif ($status_db == 'Izin') { $status = 'I'; $total_izin++; }
                         } else {
-                            // Cek jika hari ini adalah hari libur (Sabtu/Minggu)
+                           
                             $nama_hari = date('N', strtotime("$tahun-$bulan-$hari"));
                             if ($nama_hari == 6 || $nama_hari == 7) {
-                                $status = 'L'; // Libur
+                                $status = 'L';
                             } else {
-                                $status = 'A'; // Alpha
+                                $status = 'A'; 
                                 $total_alpha++;
                             }
                         }
-                        // Beri warna sesuai status
+                        
                         echo "<td class='status-cell-$status'>$status</td>";
                     }
 
-                    // Tampilkan total
+                    
                     echo "<td>$total_hadir</td>";
                     echo "<td>$total_sakit</td>";
                     echo "<td>$total_izin</td>";

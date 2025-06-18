@@ -1,7 +1,7 @@
 <?php
 $page_title = "Data Karyawan";
 include '../template/header.php';
-include '../koneksi.php'; 
+
 ?>
 
 <div class="content">

@@ -1,7 +1,7 @@
 <?php
 $page_title = "Data Absensi Hari Ini";
 include '../template/header.php';
-include '../koneksi.php';
+
 
 
 $tanggal_hari_ini = date("Y-m-d");

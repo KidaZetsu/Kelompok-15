@@ -1,5 +1,7 @@
 <?php
 
+define('BASE_URL', 'http://localhost/projek_kelompok%205/');
+
 $hostname = "localhost";
 $username = "root"; 
 $password = "";     

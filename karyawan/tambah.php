@@ -1,7 +1,7 @@
 <?php
 $page_title = "Tambah Karyawan";
 include '../template/header.php';
-include '../koneksi.php';
+
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

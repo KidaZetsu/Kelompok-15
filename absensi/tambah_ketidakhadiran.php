@@ -1,7 +1,7 @@
 <?php
 $page_title = "Tambah Keterangan Tidak Hadir";
 include '../template/header.php';
-include '../koneksi.php';
+
 
 // Logika untuk memproses form saat disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

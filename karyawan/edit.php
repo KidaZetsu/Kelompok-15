@@ -1,7 +1,7 @@
 <?php
 $page_title = "Edit Karyawan";
 include '../template/header.php';
-include '../koneksi.php';
+
 
 // --- LOGIKA UNTUK PROSES UPDATE DATA (Method: POST) ---
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
