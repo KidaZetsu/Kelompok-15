@@ -3,24 +3,24 @@ $page_title = "Tambah Keterangan Tidak Hadir";
 include '../template/header.php';
 
 
-// Logika untuk memproses form saat disubmit
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_karyawan = $_POST['id_karyawan'];
     $tanggal_absensi = $_POST['tanggal_absensi'];
     $status_kehadiran = $_POST['status_kehadiran'];
     $keterangan = mysqli_real_escape_string($koneksi, $_POST['keterangan']);
 
-    // Cek apakah sudah ada data absensi untuk karyawan ini di tanggal yang sama
+ 
     $cek_query = "SELECT id_absensi FROM absensi WHERE id_karyawan = '$id_karyawan' AND tanggal_absensi = '$tanggal_absensi'";
     $cek_result = mysqli_query($koneksi, $cek_query);
 
     if (mysqli_num_rows($cek_result) > 0) {
-        // Jika sudah ada, UPDATE data yang ada
+        
         $data = mysqli_fetch_assoc($cek_result);
         $id_absensi = $data['id_absensi'];
         $query = "UPDATE absensi SET status_kehadiran = '$status_kehadiran', keterangan = '$keterangan', waktu_masuk = NULL, waktu_keluar = NULL WHERE id_absensi = '$id_absensi'";
     } else {
-        // Jika belum ada, INSERT data baru
+        
         $query = "INSERT INTO absensi (id_karyawan, tanggal_absensi, status_kehadiran, keterangan) VALUES ('$id_karyawan', '$tanggal_absensi', '$status_kehadiran', '$keterangan')";
     }
 
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <select id="id_karyawan" name="id_karyawan" required>
                 <option value="">-- Pilih Karyawan --</option>
                 <?php
-                // Mengambil data karyawan aktif
+                
                 $query_karyawan = "SELECT id_karyawan, nama_lengkap FROM karyawan WHERE status_karyawan = 'Aktif' ORDER BY nama_lengkap";
                 $result_karyawan = mysqli_query($koneksi, $query_karyawan);
                 while ($karyawan = mysqli_fetch_assoc($result_karyawan)) {

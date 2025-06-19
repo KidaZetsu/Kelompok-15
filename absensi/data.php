@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 }
-// ... (kode PHP di bagian atas tetap sama) ...
+
 ?>
 
 <div class="content">
@@ -53,8 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </thead>
         <tbody>
             <?php
-            // Query untuk mengambil semua karyawan aktif dan data absensi mereka hari ini
-            // Query diubah sedikit untuk mengambil status dan keterangan
+            
             $query = "SELECT k.id_karyawan, k.nama_lengkap, j.nama_jabatan, 
                              a.waktu_masuk, a.waktu_keluar, a.status_kehadiran, a.keterangan
                       FROM karyawan k
@@ -75,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td><?php echo $data['waktu_masuk'] ? $data['waktu_masuk'] : '-'; ?></td>
                     <td><?php echo $data['waktu_keluar'] ? $data['waktu_keluar'] : '-'; ?></td>
                     <td>
-                        <?php // --- BLOK STATUS BARU ---
+                        <?php 
                         if ($data['status_kehadiran'] == 'Hadir') {
                             echo "<span class='status-hadir'>Hadir</span>";
                         } elseif ($data['status_kehadiran'] == 'Izin') {
@@ -88,8 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         ?>
                     </td>
                     <td>
-                        <?php // --- BLOK AKSI BARU ---
-                        // Tombol hanya muncul jika statusnya bukan Izin atau Sakit
+                        <?php 
                         if ($data['status_kehadiran'] != 'Izin' && $data['status_kehadiran'] != 'Sakit') {
                         ?>
                             <form method="post" action="data.php" style="display:inline;">
@@ -104,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </form>
                         <?php
                         } else {
-                            // Jika Izin atau Sakit, tampilkan keterangan
+                           
                             echo "<small><i>" . htmlspecialchars($data['keterangan']) . "</i></small>";
                         }
                         ?>

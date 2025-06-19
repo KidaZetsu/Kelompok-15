@@ -3,9 +3,9 @@ $page_title = "Edit Karyawan";
 include '../template/header.php';
 
 
-// --- LOGIKA UNTUK PROSES UPDATE DATA (Method: POST) ---
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil semua data dari form
+    
     $id_karyawan = $_POST['id_karyawan'];
     $nik = mysqli_real_escape_string($koneksi, $_POST['nik']);
     $nama_lengkap = mysqli_real_escape_string($koneksi, $_POST['nama_lengkap']);
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $alamat = mysqli_real_escape_string($koneksi, $_POST['alamat']);
     $status_karyawan = mysqli_real_escape_string($koneksi, $_POST['status_karyawan']);
 
-    // Buat query UPDATE
+    
     $query = "UPDATE karyawan SET 
                 nik = '$nik', 
                 nama_lengkap = '$nama_lengkap', 
@@ -25,20 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               WHERE id_karyawan = '$id_karyawan'";
 
     if (mysqli_query($koneksi, $query)) {
-        // Jika berhasil, redirect kembali ke halaman data.php dengan pesan sukses
+        
         echo "<script>alert('Data karyawan berhasil diperbarui!'); window.location.href='data.php';</script>";
         exit();
     } else {
-        // Jika gagal, tampilkan pesan error
+       
         echo "<script>alert('Gagal memperbarui data: " . mysqli_error($koneksi) . "');</script>";
     }
 }
 
-// --- LOGIKA UNTUK MENAMPILKAN FORM DENGAN DATA AWAL (Method: GET) ---
-// Ambil ID dari URL
+
+
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    // Query untuk mengambil data karyawan spesifik
+    
     $query_karyawan = "SELECT * FROM karyawan WHERE id_karyawan = $id";
     $result_karyawan = mysqli_query($koneksi, $query_karyawan);
     
@@ -71,11 +71,11 @@ if (isset($_GET['id'])) {
             <select id="id_jabatan" name="id_jabatan" required>
                 <option value="">-- Pilih Jabatan --</option>
                 <?php
-                // Mengambil data jabatan dari database untuk dropdown
+              
                 $query_jabatan = "SELECT * FROM jabatan ORDER BY nama_jabatan";
                 $result_jabatan = mysqli_query($koneksi, $query_jabatan);
                 while ($jabatan = mysqli_fetch_assoc($result_jabatan)) {
-                    // Cek jika ID jabatan sama dengan ID jabatan karyawan, maka tandai sebagai 'selected'
+                    
                     $selected = ($jabatan['id_jabatan'] == $karyawan['id_jabatan']) ? 'selected' : '';
                     echo "<option value='" . $jabatan['id_jabatan'] . "' $selected>" . htmlspecialchars($jabatan['nama_jabatan']) . "</option>";
                 }

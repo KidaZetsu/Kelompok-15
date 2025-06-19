@@ -22,5 +22,5 @@ include 'template/header.php';
 </div>
 
 <?php
-include 'template/footer.php'; // Menampilkan footer
+include 'template/footer.php'; 
 ?>
